@@ -19,7 +19,7 @@ function PropertyCard({ cardItems }) {
           bed = {card.bed}
           area = {card.area}
           price ={card.price}
-          link={card.plink}
+          link={card.plink + '/' + card.id} 
         />
       ))}
     </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import Navbar from '../components/Navbar/Navbar';
 import SearchBar from '../components/SearchBar/SearchBar';
 import PropertyCard from '../components/Property/PropertyCard';
@@ -10,6 +10,38 @@ import DropdownMenu from '../components/Dropdown/DRopdown';
 function Sales() {
 
     const [cardItems, setCardItems] = useState([]);
+    const [selectedType, setSelectedType] = useState(''); 
+    const [selectedSort, setSelectedSort] = useState('');
+
+
+    const fetchData = async () => {
+        try {
+            let url = '/properties';
+            const queryParams = [];
+
+            if (selectedType) {
+                queryParams.push(`type=${selectedType}`);
+            }
+            if (selectedSort) {
+                queryParams.push(`sort=${selectedSort.toLowerCase()}`);
+            }
+
+            if (queryParams.length > 0) {
+                url += `?${queryParams.join('&')}`;
+            }
+
+            const response = await fetch(url);
+            const data = await response.json();
+            setCardItems(data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, [selectedType, selectedSort]);
+
 
     return (
         <>
@@ -24,10 +56,10 @@ function Sales() {
                         <p className='text-darkgray text-lg leading-7 font-inter font-normal lowercase'>8 of 587</p>
                     </div>
                     <div className='dropdown'>
-                        <DropdownMenu />
+                        <DropdownMenu setSelectedType={setSelectedType} fetchData={fetchData} />
                     </div>
                     <div className='sort'>
-                        <Sort setCardItems={setCardItems} />
+                        <Sort setSelectedSort={setSelectedSort} fetchData={fetchData} />
                     </div>
                 </div>
                 <PropertyCard cardItems={cardItems} />
