@@ -24,7 +24,7 @@ function App() {
         <Route path="/apartments" element={<Apartments />} />
         <Route path="/forgot" element={<ForgotPassword />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/property" element={<PropertyDetails/>} />
+        <Route path="/property/:id" element={<PropertyDetails/>} />
       </Routes>
     </section>
   );

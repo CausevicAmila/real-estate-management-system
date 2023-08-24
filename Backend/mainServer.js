@@ -3,6 +3,8 @@ const app = express();
 const path = require('path');
 const fs = require('fs');
 const client = require('./Database/database')
+const bodyParser = require('body-parser');
+const nodemailer = require('nodemailer');
 
 app.use(express.static(path.join(__dirname, 'dist')));
 
@@ -12,6 +14,10 @@ client.connect()
 
 
 const port = process.env.PORT || 3000
+
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 
 app.get('/', (req, res) => {
@@ -51,7 +57,7 @@ app.get('/login', (req, res) => {
     res.sendFile(location);
 
 });
-app.get('/property', (req, res) => {
+app.get('/property/:id', (req, res) => {
 
     const location = path.join(__dirname, 'dist', 'index.html')
 
@@ -59,10 +65,16 @@ app.get('/property', (req, res) => {
 
 });
 
+
 app.get('/properties', (req, res) => {
-    const { sort } = req.query;
+    const { sort, type } = req.query;
 
     let orderByClause = 'ORDER BY id ASC';
+    let whereClause = '';
+
+    if (type && type.toLowerCase() !== 'all') {
+        whereClause = `WHERE type = '${type}'`;
+    }
 
     if (sort) {
         if (sort[0].toLowerCase() === 'l') {
@@ -72,7 +84,7 @@ app.get('/properties', (req, res) => {
         }
     }
 
-    const query = `SELECT * FROM property ${orderByClause}`;
+    const query = `SELECT * FROM property ${whereClause} ${orderByClause}`;
 
     client.query(query, (err, dbRes) => {
         if (err) {
@@ -84,9 +96,43 @@ app.get('/properties', (req, res) => {
     });
 });
 
+
+const appSpecificPassword = 'aatsniuwhkpwqjwc'
+
+app.post('/send-email', (req, res) => {
+    const { name, surname, email, message } = req.body;
+
+    const transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+            user: 'realestateba2023@gmail.com', 
+            pass: appSpecificPassword 
+        }
+    });
+
+    const mailOptions = {
+        from: `${email}`,
+        to: 'realestateba2023@gmail.com',
+        subject: 'Property Inquiry',
+        html: `<p>Name: ${name} ${surname}</p><p>Email: ${email}</p><p>Message: ${message}</p>`
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.error(error);
+            res.status(500).send('Error sending email');
+        } else {
+            console.log('Email sent:', info.response);
+            res.send('Email sent successfully');
+        }
+    });
+});
+
+
+
 app.get('/image/:id', (req, res) => {
     const pictureId = req.params.id;
-    const allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif']; 
+    const allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif' ,'.webp']; 
 
     let foundImagePath = null;
 
@@ -109,6 +155,25 @@ app.get('/image/:id', (req, res) => {
     }
 });
 
+
+app.get('/getPropertyDetails/:id', async (req, res) => {
+    const propertyId = req.params.id;
+
+    try {
+        const query = 'SELECT * FROM property WHERE id = $1';
+        const { rows } = await client.query(query, [propertyId]);
+
+        if (rows.length === 0) {
+            return res.status(404).json({ error: 'Property not found' });
+        }
+
+        const property = rows[0];
+        res.json(property);
+    } catch (error) {
+        console.error('Error fetching property data:', error);
+        res.status(500).json({ error: 'Error fetching property data' });
+    }
+});
 
 
 app.listen(port, () => {

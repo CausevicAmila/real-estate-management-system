@@ -2,43 +2,49 @@ import React, { useState } from 'react';
 import './Dropdown.css';
 import { MdOutlineArrowDropDown } from 'react-icons/md';
 
-function DropdownMenu() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState('');
+function DropdownMenu({ setSelectedType, fetchData }) {
+    const [isOpen, setIsOpen] = useState(false);
+    const [selectedOption, setSelectedOption] = useState('');
 
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
+    const toggleDropdown = () => {
+        setIsOpen(!isOpen);
+    };
 
-  const handleOptionClick = (option) => {
-    setSelectedOption(option);
-    setIsOpen(false);
-  };
+    const handleOptionClick = async (option) => {
+        setSelectedOption(option);
+        setIsOpen(false);
 
-  return (
-    <div className="dropdown"> 
-    <div className="type  text-gray"> 
-    {selectedOption || ' Property Type '} </div>
-      <button className="dropdown-toggle bg-accent" onClick={toggleDropdown}>
-        <div className='dicon text-lightgray'>
-          <MdOutlineArrowDropDown /> 
+        setSelectedType(option); // Update selected property type using setSelectedType
+        fetchData(); // Fetch data based on the selected property type and sorting option
+    };
+
+    return (
+        <div className="dropdown">
+            <div className="type  text-gray">
+                {selectedOption || ' Property Type '} </div>
+            <button className="dropdown-toggle bg-accent" onClick={toggleDropdown}>
+                <div className='dicon text-lightgray'>
+                    <MdOutlineArrowDropDown />
+                </div>
+            </button>
+            {isOpen && (
+                <div className="dropdown-content bg-lightgray text-primary">
+                    <div className="dropdown-item" onClick={() => handleOptionClick('All')}>
+                        All
+                    </div>
+                    <div className="dropdown-item" onClick={() => handleOptionClick('Flat')}>
+                        Flat
+                    </div>
+                    <div className="dropdown-item" onClick={() => handleOptionClick('Apartment')}>
+                        Apartment
+                    </div>
+                    <div className="dropdown-item" onClick={() => handleOptionClick('Commercial')}>
+                        Commercial
+                    </div>
+                </div>
+            )}
         </div>
-      </button>
-      {isOpen && (
-        <div className="dropdown-content bg-lightgray text-primary">
-          <div className="dropdown-item" onClick={() => handleOptionClick('Type: Flat')}>
-            Flat
-          </div>
-          <div className="dropdown-item" onClick={() => handleOptionClick('Type: Apartment')}>
-            Apartment
-          </div>
-          <div className="dropdown-item" onClick={() => handleOptionClick('Type: Commercial')}>
-            Commercial
-          </div>
-        </div>
-      )}
-    </div>
-  );
+    );
 }
 
 export default DropdownMenu;

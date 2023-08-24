@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../Dropdown.css';
 import { MdOutlineArrowDropDown } from 'react-icons/md';
 
-function Sort({ setCardItems }) {
+function Sort({ setSelectedSort, fetchData }) {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState('');
 
@@ -10,26 +10,15 @@ function Sort({ setCardItems }) {
         setIsOpen(!isOpen);
     };
 
-    const fetchData = async (sortOption) => {
-        try {
-            const response = await fetch(`/properties${sortOption}`);
-            const data = await response.json();
-            setCardItems(data);
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-    };
-
+   
     const handleOptionClick = async (option) => {
         setSelectedOption(option);
         setIsOpen(false);
-        const sortOption = option.toLowerCase() === 'lowest price first' ? `?sort=${option.toLowerCase()}` : `?sort=${option.toLowerCase()}`;
-        fetchData(sortOption);
+
+        setSelectedSort(option); // Update selected sorting option using setSelectedSort
+        fetchData(); // Fetch data based on the selected property type and sorting option
     };
 
-    useEffect(() => {
-        fetchData('');
-    }, []); 
 
     return (
         <div className="dropdown">
