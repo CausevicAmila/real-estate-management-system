@@ -48,7 +48,7 @@ function Contact() {
                 <section className="h-screen">
                     <div className="h-containerreg bg-lightgray text-primary">
                         <div>
-                            <p className='text1 text-3xl leading-9 font-extrabold'>You are selling the property?</p>
+                            <p className='text1 text-3xl leading-9 font-extrabold'>Inquiry about the property?</p>
                             <p className='text2 text-xl leading-7 font-normal'>
                                 You are on the right place <br /><br />
                                 Fill out this form and we will contact you as soon as possible.

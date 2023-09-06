@@ -4,9 +4,6 @@ import './Property.css';
 
 function PropertyCard({ cardItems }) {
 
-    console.log('Received cardItems:', cardItems);
-
-
   return (
     <div className='pcard'>
           {cardItems.map((card, index) => (
