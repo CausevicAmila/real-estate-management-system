@@ -1,0 +1,108 @@
+.sidebar-container{
+    display: flex;  
+    
+}
+
+.sidebar{
+    background-color: #F2F2F2;
+    color: #007aff;
+    position:fixed;
+    height: 100vh;
+    width: 300px;
+    transition: all 0.5s;
+    margin-right: 20px;
+}
+.top_section{
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    padding: 20px 15px;
+}
+.side-logo{
+    display: flex;
+    width: 160px;
+}
+
+.bars{
+    display: flex;
+    font-size: 25px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.link{
+    display: flex;
+    color: #007aff;
+    padding: 20px 15px;
+    gap: 10px;
+}
+.link:last-child{
+    position: absolute;
+    bottom: 0;
+}
+.link:hover{ 
+    border-bottom: 2px solid #ff9800;
+    width: 80%;
+    margin-left: 10%;
+    padding-bottom: 1px;
+    transition: .1s;
+    z-index: 1;
+}
+.active{
+    border-bottom: 2px solid #ff9800;
+    width: 80%;
+    margin-left: 10%;
+    padding-bottom: 1px;
+    z-index: 1;
+}
+.activemin{
+    border-bottom: 2px solid #ff9800;
+    padding-bottom: 1px;
+    z-index: 1;
+}
+.alogo{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    font-size: 25px;
+    
+}
+@media (max-width: 768px) {
+    .sidebar {
+      width: 100%; 
+    }
+  
+    .slogo {
+      margin-right: 0; 
+    }
+  
+    .bars {
+      margin-left: 0; 
+    }
+  
+    .link:last-child {
+      margin-top: 0; 
+      bottom: 40px;
+    }
+}
+.sidebar-closed {
+    width: 50px; /* Width when closed */
+  }
+
+
+  main {
+    flex: 1;
+   
+  }
+
+  .main-open {
+    flex: 1; /* Main content fills remaining space when open */
+    transition: margin-left 0.3s; /* Add a transition for smooth width changes */
+    margin-left: 300px; /* Adjust this margin to match your open sidebar width */
+  }
+  
+  .main-closed {
+    flex: 1; /* Main content fills remaining space when closed */
+    transition: margin-left 0.3s; /* Add a transition for smooth width changes */
+    margin-left: 50px; /* Adjust this margin to match your closed sidebar width */
+  }

@@ -10,6 +10,9 @@ import ForgotPassword from './routes/ForgotPassword/ForgotPassword';
 import Register from './routes/Register/Register';
 import Apartments from './routes/Apartments';
 import PropertyDetails from "./routes/PropertyDetail/PropertyDetail";
+import Admin from "./routes/AdminDashboard/Admin";
+import Properties from "./routes/AdminDashboard/Properties";
+import AddProperty from "./routes/AdminDashboard/AddProperty";
 
 function App() {
   return (
@@ -25,6 +28,9 @@ function App() {
         <Route path="/forgot" element={<ForgotPassword />} />
         <Route path="/register" element={<Register />} />
         <Route path="/property/:id" element={<PropertyDetails/>} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/admin" element={<Properties />} />
+        <Route path="/add" element={<AddProperty />} />
       </Routes>
     </section>
   );
