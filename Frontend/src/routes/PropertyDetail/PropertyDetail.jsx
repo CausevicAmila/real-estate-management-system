@@ -61,10 +61,6 @@ function PropertyDetails() {
     return (
         <div>
             <Navbar />
-            {/*<div className="search-bar" bis_skin_checked="1">
-                <SearchBar />
-            </div>*/}
-
             <div className='back bg-lightgray'>
                 <div className='mainDiv'>
                     <div className='left-side'>

@@ -11,9 +11,6 @@ function Home() {
         <div >
             <Navbar />
             <section >
-                {/*<div className="search-bar">
-                    <SearchBar />
-                </div>*/}
                 <div className="image object-cover">
                     <img src={HomePng} alt="" />
                 </div>

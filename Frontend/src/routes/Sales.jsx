@@ -12,6 +12,15 @@ function Sales() {
     const [cardItems, setCardItems] = useState([]);
     const [selectedType, setSelectedType] = useState(''); 
     const [selectedSort, setSelectedSort] = useState('');
+    const [searchQuery, setSearchQuery] = useState('');
+
+    const handleSearchChange = (event) => {
+        setSearchQuery(event.target.value);
+    };
+    const filteredCardItems = cardItems.filter((item) =>
+        item.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
 
 
     const fetchData = async () => {
@@ -48,7 +57,7 @@ function Sales() {
             <section className="h-screen">
                 <Navbar />
                 <div className="search-bar">
-                    <SearchBar />
+                    <SearchBar onSearchChange={handleSearchChange} />
                 </div>
                 <div className='container'>
                     <div className='h-text text-primary uppercase text-2xl leading-8 font-inter font-semibold'>
@@ -62,7 +71,7 @@ function Sales() {
                         <Sort setSelectedSort={setSelectedSort} fetchData={fetchData} />
                     </div>
                 </div>
-                <PropertyCard cardItems={cardItems} />
+                <PropertyCard cardItems={filteredCardItems} />
                 <Footer />
             </section>
         </>

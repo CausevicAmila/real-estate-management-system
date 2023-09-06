@@ -5,6 +5,8 @@ const fs = require('fs');
 const client = require('./Database/database')
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
+const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
 
 app.use(express.static(path.join(__dirname, 'dist')));
 
@@ -14,10 +16,13 @@ client.connect()
 
 
 const port = process.env.PORT || 3000
+const SECRET_KEY = 'd2JF9$1k8XpA&5qR';
+
 
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 
 app.get('/', (req, res) => {
@@ -173,6 +178,55 @@ app.get('/getPropertyDetails/:id', async (req, res) => {
         console.error('Error fetching property data:', error);
         res.status(500).json({ error: 'Error fetching property data' });
     }
+});
+
+
+
+app.post('/loginIn', async (req, res) => {
+    const { username, password } = req.body;
+
+    try {
+        const result = await client.query('SELECT * FROM users WHERE username = $1 AND password = $2', [username, password]);
+        const user = result.rows[0];
+
+
+        if (user) {
+            const token = jwt.sign({ userId: user.id }, SECRET_KEY, { expiresIn: '10 days', algorithm: 'HS256' });
+            res.status(200).cookie('token', token, { httpOnly: true });
+            res.json({ token });
+
+        } else {
+            res.status(401).json({ error: 'Invalid username or password.' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: 'An error occurred while logging in.' });
+    }
+});
+
+
+function verifyToken(req, res, next) {
+
+    const token = req.cookies.token;
+
+    if (!token) {
+        return res.status(401).json({ error: 'Authorization token is missing.' });  
+    }
+
+    try {
+        const decoded = jwt.verify(token, SECRET_KEY);
+        req.userId = decoded.userId;
+        next();
+    } catch (error) {
+        res.status(401).json({ error: 'Invalid token.' });
+    }
+}
+
+
+app.get('/admin', verifyToken, (req, res) => {
+
+    const location = path.join(__dirname, 'dist', 'index.html')
+
+    res.sendFile(location);
 });
 
 

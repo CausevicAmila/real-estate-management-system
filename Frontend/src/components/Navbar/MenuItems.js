@@ -19,9 +19,9 @@ export const MenuItems = [
         url : '/contact',
         cName : 'nav-links'
     }, 
-    {
+   /* {
         title : 'Log in',
         url : '/login',
         cName : 'nav-links'
-    }
+    }*/
 ]
