@@ -1,0 +1,117 @@
+main{
+
+    padding: 20px;
+}
+
+.icon-left-side{
+    float:left;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    text-align: center; 
+    justify-content: center; 
+    font-size: 40px;
+    
+}
+.lines{
+    height: 80%;
+    width: 80%;
+    outline: 2px dashed #FF9800;
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    text-align: center; 
+    justify-content: center; 
+}
+.icon-text{
+    font-size: 20px;
+}
+li {
+    list-style-type: none;
+}
+.form{
+    outline: 2px solid #ff9800;
+    width: 30px;
+    padding: 5px;
+    height: 20px;
+    margin-left: 16px;
+    margin-right: 8px;
+    margin-top: 20px;
+}
+.a-desc{
+    border-bottom: 2px solid #ff9800;
+    width: 100%;
+    padding: 5px;
+    height: 40px;
+    margin-right: 8px;
+    font-size: 12px;
+}
+.a-mainTitle{
+    border-bottom: 2px solid #ff9800;
+    width: 100%;
+    padding: 5px;
+    height: 40px;
+    margin-right: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 16px;
+    margin-top: 48px;
+}
+.a-price{
+    border-bottom: 2px solid #ff9800;
+    width: 20%;
+    padding: 5px;
+    height: 40px;
+    margin-right: 8px;
+    font-size: 16px;
+    font-weight: 500;
+}
+.a-address{
+    border-bottom: 2px solid #ff9800;
+    width: 75%;
+    padding: 5px;
+    height: 30px;
+    margin-left: 8px;
+    margin-right: 8px;
+    font-size: 12px;
+}
+.input-field::placeholder{
+    font-size: 4px;
+}
+
+.rounded-dropdown {
+    border-radius: 20px; 
+    padding: 5px; 
+    margin-left: 8px; 
+    background: #ffff;
+    color:#a3a3a3;
+    
+  }
+  
+.horizontal-dropdown {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+  }
+
+
+
+  .adminCont {
+    display: flex;
+  
+  }
+  .btnSaveDiv{
+    width: 100%;
+    text-align: center;
+  }
+
+  .btnSave {
+    background-color: #FF9800;
+    padding: 8px 32px;
+    color: white;
+    border: none;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+border-radius: 20px;
+}
