@@ -86,9 +86,12 @@
     font-size: 20px;
 }
 
-.slide-container{
+.slide-container {
+    width: 100%;
     margin-top: 25px;
     margin-left: 15px;
+    max-height: 550px;
+    overflow: hidden;
 }
 .picture{
     border-radius: 20px;
@@ -131,7 +134,7 @@
     color: white;
     border: none;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
-border-radius: 20px;
+    border-radius: 20px;
 }
 .leftdesc hr{
     margin-bottom: 20px;
@@ -165,4 +168,15 @@ border-radius: 20px;
         display: block;
 
     }
+}
+.clear {
+    clear: both;
+}
+
+.active {
+    border-bottom: 2px solid #ff9800;
+    width: none; 
+    margin-left: 0 !important; 
+    padding-bottom: 1px;
+    z-index: 1;
 }

@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import "./Admin.css";
 import Sidebar from "../../components/Sidebar/Sidebar";
-import '../PropertyDetail/PropertyDetail.css';
+//import '../PropertyDetail/PropertyDetail.css';
 import { RiUserLocationLine, RiHotelBedLine, RiSpace, RiMoneyDollarCircleLine } from "react-icons/ri";
 import { BiBuildingHouse } from "react-icons/bi";
 import { FaImages } from "react-icons/fa";
@@ -19,13 +19,7 @@ function Dropdown({ name, options }) {
 }
 
 function AddProperty() {
-    const divStyle = {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundSize: 'cover',
-        height: '300px'
-    };
+
     const [selectedOptions, setSelectedOptions] = useState([]);
     const [images, setImages] = useState([]);
     const [isDragging, setIsDragging] = useState(false);
@@ -128,6 +122,7 @@ function AddProperty() {
     const typeOptions = ['Flat', 'Apartment', 'Commercial'];
     const yearConstructionOptions = Array.from({ length: 40 }, (_, i) => (2023 - i).toString());
     const floorOptions = Array.from({ length: 30 }, (_, i) => (i + 1).toString());
+
     return (
         <Sidebar>
             <div className='mainDivv' >
@@ -145,7 +140,7 @@ function AddProperty() {
                                 <input type="file" className='imgupload' ref={fileInputRef} onChange={onFileSelect} multiple />
 
                             </div>
-                            <div className='containerImages'>
+                            <div className='containerImage'>
                                 {
                                     images.map((images, index) => (
                                         <div className='image' key={index }>

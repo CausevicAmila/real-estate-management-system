@@ -8,11 +8,7 @@ import { RiUserLocationLine, RiHotelBedLine, RiSpace, RiMoneyDollarCircleLine } 
 import { BiBuildingHouse } from "react-icons/bi";
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css'
-import prop7 from '../../public/prop7.jpg';
-import prop8 from '../../public/prop8.jpg';
-import prop9 from '../../public/prop9.jpg';
-import prop10 from '../../public/prop10.jpg';
-import { useParams } from 'react-router-dom'; 
+import { useParams } from 'react-router-dom';
 
 
 function PropertyDetails() {
@@ -52,7 +48,7 @@ function PropertyDetails() {
     ];
 
     useEffect(() => {
-        fetch(`/getPropertyDetails/${id}`)  
+        fetch(`/getPropertyDetails/${id}`)
             .then(response => response.json())
             .then(data => setPropertyData(data))
             .catch(error => console.error('Error fetching property data:', error));
@@ -65,7 +61,7 @@ function PropertyDetails() {
                 <div className='mainDiv'>
                     <div className='left-side'>
                         <div className="slide-container">
-                            <Slide>
+                            <Slide autoplay={true} >
                                 {slideImages.map((slideImage, index) => (
                                     <div key={index}>
                                         <div className='picture' style={{ ...divStyle, 'backgroundImage': `url(${slideImage.url})` }}>
@@ -146,8 +142,11 @@ function PropertyDetails() {
 
                             </div>
                         </div>
-                    </div></div>
+                    </div>
+                </div>
                 <div className='pd-text mt-6'> </div>
+                <div className="clear"></div>
+
             </div>
             <Footer />
         </div>
