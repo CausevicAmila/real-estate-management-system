@@ -128,7 +128,7 @@ border-radius: 20px;
 .imgupload{
     display: none;
 }
-.containerImages {
+.containerImage {
     width: 100%;
     height: auto;
     display: grid;
@@ -140,7 +140,7 @@ border-radius: 20px;
     margin-left: 20px;
 }
 
-.containerImages .image{
+.containerImage .image{
     width: 90%;
     margin-right: 5px;
     height: 100px;
@@ -150,14 +150,14 @@ border-radius: 20px;
 }
 
 
-.containerImages .image img {
+.containerImage .image img {
     width:100%;
     height:100%;
     border-radius: 5px;
     object-fit: cover;
 }
 
-.containerImages .image span {
+.containerImage .image span {
     position: absolute;
     top: -2px;
     right: 9px;
