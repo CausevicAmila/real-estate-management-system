@@ -10,7 +10,7 @@ function Sidebar({ children }) {
   const [isOpen, setIsOpen] = useState(true);
   const toggle = () => setIsOpen(!isOpen);
 
-  const sidebarClass = isOpen ? "sidebar" : "sidebar sidebar-closed"; // Apply class based on isOpen state
+  const sidebarClass = isOpen ? "sidebar" : "sidebar sidebar-closed"; 
 
   const menuItem = [
     {
@@ -19,7 +19,7 @@ function Sidebar({ children }) {
       icon: <BsHouses />,
     },
     {
-      path: "/add",
+      path: "/admin/add",
       name: "Add property",
       icon: <BsHouseAdd />,
     },
@@ -42,7 +42,7 @@ function Sidebar({ children }) {
           </div>
         </div>
         {menuItem.map((item, index) => (
-          <NavLink to={item.path} key={index} className="link font-inter font-semibold" activeClassName="activemin">
+            <NavLink to={item.path} key={index} className="link font-inter font-semibold" activeclassname={item.path === '/admin' ? 'active' : ''}>
             <div style={{ fontSize: isOpen ? "24px" : "block" }} className="icon">
               {item.icon}
             </div>

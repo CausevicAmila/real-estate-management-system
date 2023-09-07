@@ -62,6 +62,7 @@ app.get('/login', (req, res) => {
     res.sendFile(location);
 
 });
+
 app.get('/property/:id', (req, res) => {
 
     const location = path.join(__dirname, 'dist', 'index.html')
@@ -191,7 +192,7 @@ app.post('/loginIn', async (req, res) => {
 
 
         if (user) {
-            const token = jwt.sign({ userId: user.id }, SECRET_KEY, { expiresIn: '10 days', algorithm: 'HS256' });
+            const token = jwt.sign({ userId: user.id }, SECRET_KEY, { expiresIn: '1 hour', algorithm: 'HS256' });
             res.status(200).cookie('token', token, { httpOnly: true });
             res.json({ token });
 
@@ -229,6 +230,12 @@ app.get('/admin', verifyToken, (req, res) => {
     res.sendFile(location);
 });
 
+app.get('/admin/add', verifyToken, (req, res) => {
+
+    const location = path.join(__dirname, 'dist', 'index.html')
+
+    res.sendFile(location);
+});
 
 app.listen(port, () => {
     console.log(`Express.js server listening on port ${port}`);

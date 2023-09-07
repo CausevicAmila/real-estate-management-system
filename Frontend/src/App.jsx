@@ -15,25 +15,25 @@ import Properties from "./routes/AdminDashboard/Properties";
 import AddProperty from "./routes/AdminDashboard/AddProperty";
 
 function App() {
-  return (
-    <section className="h-screen">
-      <Routes>
-        <Route path="/sales" element={<Sales />} />
-        <Route path="/rentals" element={<Rentals />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/about" element={<AboutUs />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/apartments" element={<Apartments />} />
-        <Route path="/forgot" element={<ForgotPassword />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/property/:id" element={<PropertyDetails/>} />
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/admin" element={<Properties />} />
-        <Route path="/add" element={<AddProperty />} />
-      </Routes>
-    </section>
-  );
+    return (
+        <section className="h-screen">
+            <Routes>
+                <Route path="/sales" element={<Sales />} />
+                <Route path="/rentals" element={<Rentals />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/about" element={<AboutUs />} />
+                <Route path="/" element={<Home />} />
+                <Route path="/apartments" element={<Apartments />} />
+                <Route path="/forgot" element={<ForgotPassword />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/property/:id" element={<PropertyDetails />} />
+                <Route path="/admin" element={<Admin />} />
+                <Route path="/admin" element={<Properties />} />
+                <Route path="/admin/add" element={<AddProperty />} />
+            </Routes>
+        </section>
+    );
 }
 
 export default App;
