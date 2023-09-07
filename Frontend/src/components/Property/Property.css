@@ -139,7 +139,7 @@
   }
 
   .p-card {
-    width: 90%; /* One card per row */
+    width: 90%; 
     margin: 0 auto;
     margin-top: 24px;
     margin-bottom: 24px;
@@ -149,4 +149,23 @@
     margin-bottom: 16px;
   }
   
+}
+
+.btnDeleteEdit {
+    display: flex;
+    justify-content: space-around;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.p-card-admin {
+    position: relative;
+    height: 568px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 24px;
 }
