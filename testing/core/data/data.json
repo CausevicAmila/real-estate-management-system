@@ -1,0 +1,26 @@
+{
+    "credentials": {
+        "username": "admin",
+        "password": "admin123"
+    },
+    "url": {
+        "home_page": "http://localhost:3000/",
+        "login_page": "http://localhost:3000/login"
+    },
+    "productCard":{
+        "title": "THREE-BEDROOM APARTMENT",
+        "desc": "Modern apartment with an amazing view",
+        "address": "Adema Buce",
+        "price": "200000"
+    },
+    "form" : {
+        "name": "Amila",
+        "surname": "Causevic",
+        "email" : "test123@gmail.com",
+        "note" : "Test Test"
+    },
+    "login" : {
+        "username" : "admin",
+        "password" : "admin123"
+    }
+}
