@@ -1,210 +1,63 @@
-import Navbar from '../../components/Navbar/Navbar';
-import ImageSlider from '../../components/ImageSlider/ImageSlider';
-import SearchBar from "../../components/SearchBar/SearchBar";
-import './PropertyDetail.css';
-import React, { useState, useEffect } from 'react';
-import Footer from '../../components/Footer/Footer';
-import { RiUserLocationLine, RiHotelBedLine, RiSpace, RiMoneyDollarCircleLine } from "react-icons/ri";
-import { BiBuildingHouse } from "react-icons/bi";
-import { Slide } from 'react-slideshow-image';
-import 'react-slideshow-image/dist/styles.css'
-import { useParams } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import './Property.css';
+import { IoLocationOutline } from 'react-icons/io5';
+import { FaBed } from 'react-icons/fa';
+import { MdSpaceBar } from 'react-icons/md';
+import { MdOutlineEuro } from 'react-icons/md';
 
+function PropertyData(props) {
+    const [isButtonClicked, setButtonClicked] = useState(false);
 
-function PropertyDetails() {
-    const [showSlider, setShowSlider] = useState(false);
-    const [propertyData, setPropertyData] = useState({});
-
-    const handleImageClick = () => {
-        setShowSlider(true);
+    const handleClick = () => {
+        setButtonClicked(true);
     };
 
-    const { id } = useParams();
-
-    const divStyle = {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundSize: 'cover',
-        height: '400px'
-    }
-    const slideImages = [
-        {
-            url: `/image/${id}`,
-            caption: 'Slide 1'
-        },
-        {
-            url: `/image/${id}_2`,
-            caption: 'Slide 2'
-        },
-        {
-            url: `/image/${id}_3`,
-            caption: 'Slide 3'
-        },
-        {
-            url: `/image/${id}_4`,
-            caption: 'Slide 4'
-        },
-    ];
-
-    useEffect(() => {
-        fetch(`/getPropertyDetails/${id}`)
-            .then(response => response.json())
-            .then(data => setPropertyData(data))
-            .catch(error => console.error('Error fetching property data:', error));
-    }, [id]);
-
     return (
-        <div>
-            <Navbar />
-            <div className='back bg-lightgray'>
-                <div className='mainDiv'>
-                    <div className='left-side'>
-                        <div className="slide-container">
-                            <Slide >
-                                {slideImages.map((slideImage, index) => (
-                                    <div key={index}>
-                                        <div className='picture' style={{ ...divStyle, 'backgroundImage': `url(${slideImage.url})` }}>
-                                        </div>
-                                    </div>
-                                ))}
-                            </Slide>
-                        </div>
-                        <div className='imagesInRow'>
-                            <img src={`/image/${id}`} alt="" />
-                            <img src={`/image/${id}_2`} alt="" />
-                            <img src={`/image/${id}_3`} alt="" />
-                            <img src={`/image/${id}_4`} alt="" />
-                        </div>
-                    </div>
-                    <div className='right-side'>
-                        <div className='info'>
-                            <div>
-                                <h1 className='mainTitle text-primary uppercase'>{propertyData.title}</h1>
-                                <p className='titleDesc'>{propertyData.description}</p></div>
-                            <div className='priceDiv'>
-                                <div className='location'>
-                                    <RiUserLocationLine className="icon" />
-                                    <p>{propertyData.address}</p>
-
-                                </div>
-                                <div className='addInfo'>
-                                    <div className='bed'>
-                                        <RiHotelBedLine className='icon' />
-                                        <p>{propertyData.bed}</p>
-                                    </div>
-
-                                    <div className='bed'>
-                                        <RiSpace className='icon' />
-                                        <p>{propertyData.area}m2</p>
-                                    </div>
-
-                                    <div className='bed'>
-                                        <BiBuildingHouse className='icon' />
-                                        <p>Type : {propertyData.type}</p>
-                                    </div>
-
-                                </div>
-                                <div className='price'>
-                                    <RiMoneyDollarCircleLine className='icon text-primary' />
-                                    <h1 className='text-primary'>{propertyData.price}</h1>
-                                </div>
-                            </div>
-                        </div>
-                        <div className='description'>
-                            <div className='leftdesc'>
-                                <hr></hr>
-                                <p>Size: {propertyData.area}m2</p>
-                                <p>Room number: {propertyData.roomNum}</p>
-                                <p>Bathroom number: {propertyData.bathNum}</p>
-                                <p>Year construction:  {new Date(propertyData.constructionYear).getFullYear()}</p>
-                                <p>Floor: {propertyData.floor}</p>
-                                <p>Heating: {propertyData.heating}</p>
-                                <p>Windows: {propertyData.windows}</p>
-                                <button >Request a Tour</button>
-                            </div>
-                            <div className='rightdesc'>
-                                <hr></hr>
-                                <ul>
-                                    {propertyData['blinded door'] ? (
-                                        <li>
-                                            Blinded door
-                                        </li>
-                                    ) : null}
-                                    {propertyData.lift ? (
-                                        <li>
-                                            Lift
-                                        </li>
-                                    ) : null}
-                                    {propertyData['electrical power'] ? (
-                                        <li>
-                                            Electrical power
-                                        </li>
-                                    ) : null}
-                                    {propertyData.internet ? (
-                                        <li>
-                                            Internet
-                                        </li>
-                                    ) : null}
-                                    {propertyData.garbage ? (
-                                        <li>
-                                            Garbage
-                                        </li>
-                                    ) : null}
-                                    {propertyData['cable TV'] ? (
-                                        <li>
-                                            Cable TV
-                                        </li>
-                                    ) : null}
-                                    {propertyData.interphone ? (
-                                        <li>
-                                            Interphone
-                                        </li>
-                                    ) : null}
-                                    {propertyData['public parking'] ? (
-                                        <li>
-                                            Public Parking
-                                        </li>
-                                    ) : null}
-                                    {propertyData.electricity ? (
-                                        <li>
-                                            Electricity
-                                        </li>
-                                    ) : null}
-                                    {propertyData.balcony ? (
-                                        <li>
-                                            Balcony
-                                        </li>
-                                    ) : null}
-                                    {propertyData.garage ? (
-                                        <li>
-                                            Garage
-                                        </li>
-                                    ) : null}
-                                    {propertyData['air conditioning'] ? (
-                                        <li>
-                                            Air Conditioning
-                                        </li>
-                                    ) : null}
-                                    {propertyData.gas ? (
-                                        <li>
-                                            Gas
-                                        </li>
-                                    ) : null}
-                                </ul>
-
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className='pd-text mt-6'> </div>
-                <div className="clear"></div>
-
+        <div className='p-card bg-lightgray'>
+            <div className='p-image object-cover mt-6 ml-6 mr-6'>
+                <img src={props.pimage} alt='image' />
             </div>
-            <Footer />
+            <p className='header text-2xl leading-8 font-inter text-primary font-semibold uppercase mt-6 text-center'>
+                {props.header}
+            </p>
+            <p className='desc text-xl leading-7 font-inter text-darkgray font-normal mt-6'>
+                {props.desc}
+            </p>
+            <div className='location mt-6 ml-0'>
+                <IoLocationOutline className='location-icon text-darkgray ' />
+                <p className='address text-darkgray text-xl leading-7 font-inter'>{props.address}</p>
+            </div>
+
+            <div className='rooms-area mt-4 ml-6'>
+                <div className='room-container'>
+                    <FaBed className='icon bed-icon text-darkgray' />
+                    <p className='roomnumber text-darkgray text-xl leading-7 font-inter'>{props.bed}</p>
+                </div>
+                <div className='room-container'>
+                    <MdSpaceBar className='icon area-icon text-darkgray' />
+                    <p className='areanumber text-darkgray text-xl leading-7 font-inter'>{props.area} m2</p>
+                </div>
+            </div>
+            <div className='price-container ml-6 mt-3'>
+                <MdOutlineEuro className='icon text-primary font-bold' />
+                <p className='price text-primary text-xl leading-7 font-inter  font-bold'>{props.price}</p>
+            </div>
+
+            <div className='mb-6'>
+                <div className='propcard-button-container'>
+                    <Link
+                        to={props.link}
+
+                        className={`propcard-button bg-accent text-lightgray ${isButtonClicked ? 'clicked' : ''
+                            }`}
+                    >
+                        <button onClick={handleClick} >See More</button>
+                    </Link>
+                </div>
+            </div>
         </div>
     );
 }
 
-export default PropertyDetails;
+export default PropertyData;
