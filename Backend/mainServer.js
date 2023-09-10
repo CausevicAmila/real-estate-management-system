@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const http = require('http');
 const path = require('path');
 const fs = require('fs');
 const client = require('./Database/database')
@@ -7,6 +8,8 @@ const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
+const imageSize = require('image-size');
+
 
 app.use(express.static(path.join(__dirname, 'dist')));
 
@@ -20,8 +23,8 @@ const SECRET_KEY = 'd2JF9$1k8XpA&5qR';
 
 
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(cookieParser());
 
 
@@ -236,6 +239,122 @@ app.get('/admin/add', verifyToken, (req, res) => {
 
     res.sendFile(location);
 });
+
+app.post('/addingProperty', async (req, res) => {
+    try {
+        const propertyData = req.body;
+
+
+        const nextIdQuery = `
+            SELECT nextval('property_id_seq') as next_id;
+        `;
+
+        const result = await client.query(nextIdQuery);
+        const nextId = result.rows[0].next_id;
+
+        const image = propertyData.images[0];
+        const imageData = image.data
+        const binaryData = Buffer.from(imageData, 'base64');
+
+        const originalFileName = image.name; 
+        const fileExtension = originalFileName.split('.').pop();
+
+        const newFileName = `${nextId}.${fileExtension}`;
+
+        fs.writeFileSync(`property_images/${newFileName}`, binaryData);
+
+       
+        for (let i = 1; i < propertyData.images.length; i++) {
+            const image = propertyData.images[i];
+            const imageData = image.data
+            const binaryData = Buffer.from(imageData, 'base64');
+
+            const originalFileName = image.name; 
+            const fileExtension = originalFileName.split('.').pop(); 
+
+            const newFileName = `${nextId}_${i + 1}.${fileExtension}`;
+
+            fs.writeFileSync(`property_images/${newFileName}`, binaryData);
+        }
+
+
+        const insertQuery = `
+            INSERT INTO property (
+                id,
+                pimage,
+                title,
+                description,
+                address,
+                bed,
+                area,
+                price,
+                plink,
+                type,
+                "roomNum",
+                "bathNum",
+                "constructionYear",
+                floor,
+                heating,
+                windows,
+                "blinded door",
+                lift,
+                "electrical power",
+                internet,
+                garbage,
+                "cable TV",
+                interphone,
+                "public parking",
+                electricity,
+                balcony,
+                garage,
+                "air conditioning",
+                gas
+            )
+            VALUES (
+                $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12 ,$13,$14, $15, $16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29
+            )
+        `;
+
+
+        const values = [
+            nextId,
+            `/image/${nextId}`,
+            propertyData.title,
+            propertyData.desc,
+            propertyData.address,
+            parseInt(propertyData.roomNumber),
+            parseInt(propertyData.size),
+            parseInt(propertyData.price),
+            '/property',
+            propertyData.type,
+            parseInt(propertyData.roomNumber),
+            parseInt(propertyData.bathroomNumber),
+            parseInt(propertyData.yearConstruction),
+            parseInt(propertyData.floor),
+            propertyData.heatingOption,
+            propertyData.joineryOption,
+            propertyData.selectedFeatures['Blinded door'],
+            propertyData.selectedFeatures.Lift,
+            propertyData.selectedFeatures['Electrical power'],
+            propertyData.selectedFeatures.Internet,
+            propertyData.selectedFeatures.Garbage,
+            propertyData.selectedFeatures['Cable TV'],
+            propertyData.selectedFeatures.Interphone,
+            propertyData.selectedFeatures['Public Parking'],
+            propertyData.selectedFeatures.Electricity,
+            propertyData.selectedFeatures.Balcony,
+            propertyData.selectedFeatures.Garage,
+            propertyData.selectedFeatures['Air conditioning'],
+            propertyData.selectedFeatures.Gas
+        ];
+        await client.query(insertQuery, values);
+
+    } catch (error) {
+        console.error('Error uploading images:', error);
+        res.status(500).json({ message: 'Error uploading images' });
+    }
+});
+
 
 app.listen(port, () => {
     console.log(`Express.js server listening on port ${port}`);

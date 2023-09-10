@@ -6,6 +6,8 @@ import React, { useState, useEffect } from 'react';
 import Footer from '../../components/Footer/Footer';
 import { RiUserLocationLine, RiHotelBedLine, RiSpace, RiMoneyDollarCircleLine } from "react-icons/ri";
 import { BiBuildingHouse } from "react-icons/bi";
+import { TiTick } from "react-icons/ti"; 
+import { RxCross2 } from "react-icons/rx";
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css'
 import { useParams } from 'react-router-dom';
@@ -54,6 +56,8 @@ function PropertyDetails() {
             .catch(error => console.error('Error fetching property data:', error));
     }, [id]);
 
+    console.log(propertyData['blinded door'])
+
     return (
         <div>
             <Navbar />
@@ -61,7 +65,7 @@ function PropertyDetails() {
                 <div className='mainDiv'>
                     <div className='left-side'>
                         <div className="slide-container">
-                            <Slide autoplay={true} >
+                            <Slide >
                                 {slideImages.map((slideImage, index) => (
                                     <div key={index}>
                                         <div className='picture' style={{ ...divStyle, 'backgroundImage': `url(${slideImage.url})` }}>
@@ -80,7 +84,7 @@ function PropertyDetails() {
                     <div className='right-side'>
                         <div className='info'>
                             <div>
-                                <h1 className='mainTitle text-primary'>{propertyData.title}</h1>
+                                <h1 className='mainTitle text-primary uppercase'>{propertyData.title}</h1>
                                 <p className='titleDesc'>{propertyData.description}</p></div>
                             <div className='priceDiv'>
                                 <div className='location'>
@@ -126,17 +130,71 @@ function PropertyDetails() {
                             <div className='rightdesc'>
                                 <hr></hr>
                                 <ul>
-                                    <li>Blinded door</li>
-                                    <li>Lift</li>
-                                    <li>Electrical power</li>
-                                    <li>Internet</li>
-                                    <li>Sewage</li>
-                                    <li>Cable TV</li>
-                                    <li>Interphone</li>
-                                    <li>Water</li>
-                                    <li>Pipe</li>
-                                    <li>Public Parking</li>
-                                    <li>Electricity</li>
+                                    {propertyData['blinded door'] ? (
+                                        <li>
+                                            Blinded door
+                                        </li>
+                                    ) : null}
+                                    {propertyData.lift ? (
+                                        <li>
+                                            Lift
+                                        </li>
+                                    ) : null}
+                                    {propertyData['electrical power'] ? (
+                                        <li>
+                                            Electrical power
+                                        </li>
+                                    ) : null}
+                                    {propertyData.internet ? (
+                                        <li>
+                                            Internet
+                                        </li>
+                                    ) : null}
+                                    {propertyData.garbage ? (
+                                        <li>
+                                            Garbage
+                                        </li>
+                                    ) : null}
+                                    {propertyData['cable TV'] ? (
+                                        <li>
+                                            Cable TV
+                                        </li>
+                                    ) : null}
+                                    {propertyData.interphone ? (
+                                        <li>
+                                            Interphone
+                                        </li>
+                                    ) : null}
+                                    {propertyData['public parking'] ? (
+                                        <li>
+                                            Public Parking
+                                        </li>
+                                    ) : null}
+                                    {propertyData.electricity ? (
+                                        <li>
+                                            Electricity
+                                        </li>
+                                    ) : null}
+                                    {propertyData.balcony ? (
+                                        <li>
+                                            Balcony
+                                        </li>
+                                    ) : null}
+                                    {propertyData.garage ? (
+                                        <li>
+                                            Garage
+                                        </li>
+                                    ) : null}
+                                    {propertyData['air conditioning'] ? (
+                                        <li>
+                                            Air Conditioning
+                                        </li>
+                                    ) : null}
+                                    {propertyData.gas ? (
+                                        <li>
+                                            Gas
+                                        </li>
+                                    ) : null}
                                 </ul>
 
 

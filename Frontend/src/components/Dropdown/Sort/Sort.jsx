@@ -15,8 +15,8 @@ function Sort({ setSelectedSort, fetchData }) {
         setSelectedOption(option);
         setIsOpen(false);
 
-        setSelectedSort(option); // Update selected sorting option using setSelectedSort
-        fetchData(); // Fetch data based on the selected property type and sorting option
+        setSelectedSort(option); 
+        fetchData(); 
     };
 
 

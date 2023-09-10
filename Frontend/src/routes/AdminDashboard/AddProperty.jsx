@@ -5,10 +5,11 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 import { RiUserLocationLine, RiHotelBedLine, RiSpace, RiMoneyDollarCircleLine } from "react-icons/ri";
 import { BiBuildingHouse } from "react-icons/bi";
 import { FaImages } from "react-icons/fa";
+import axios from 'axios';
 
-function Dropdown({ name, options }) {
+function Dropdown({ name, options, value, onChange }) {
     return (
-        <select name={name} className="rounded-dropdown">
+        <select name={name} className="rounded-dropdown" value={value} onChange={onChange}>
             {options.map((option) => (
                 <option key={option} value={option}>
                     {option}
@@ -23,7 +24,32 @@ function AddProperty() {
     const [selectedOptions, setSelectedOptions] = useState([]);
     const [images, setImages] = useState([]);
     const [isDragging, setIsDragging] = useState(false);
-    const fileInputRef = useRef(null)
+    const fileInputRef = useRef(null);
+    const [selectedType, setSelectedType] = useState('Flat');
+    const [roomNumber, setRoomNumber] = useState('1'); 
+    const [bathroomNumber, setBathroomNumber] = useState('1'); 
+    const [yearConstruction, setYearConstruction] = useState('2023'); 
+    const [floor, setFloor] = useState('1');
+    const [selectedHeatingOption, setSelectedHeatingOption] = useState('');
+    const [selectedJoineryOption, setSelectedJoineryOption] = useState('');
+
+    const [selectedFeatures, setSelectedFeatures] = useState({
+        "Blinded door": false,
+        "Lift": false,
+        "Electrical power": false,
+        "Internet": false,
+        "Garbage": false,
+        "Cable TV": false,
+        "Interphone": false,
+        "Public Parking": false,
+        "Electricity": false,
+        "Balcony": false,
+        "Garage": false,
+        "Air conditioning": false,
+        "Gas": false,
+    });
+
+
 
     const selectFiles = () => {
         if (fileInputRef.current) {
@@ -36,16 +62,28 @@ function AddProperty() {
         if (files.length > 4) return;
         for (let i = 0; i < files.length; i++) {
             if (files[i].type.split('/')[0] !== 'image') continue;
+            if (images.length + files.length > 4) {
+                break;
+            }
             if (!images.some((e) => e.name === files[i].name)) {
-                setImages((prevImages) => [
-                    ...prevImages,
-                    {
-                        name: files[i].name,
-                        url: URL.createObjectURL(files[i]),
-                    },
-                ]
+                const reader = new FileReader();
+                reader.onload = (event) => {
 
-                )
+                    let dataUrl = event.target.result;
+
+
+                    dataUrl = dataUrl.replace(/^data:image\/\w+;base64,/, '');
+
+                    setImages((prevImages) => [
+                        ...prevImages,
+                        {
+                            name: files[i].name,
+                            url: URL.createObjectURL(files[i]),
+                            data: dataUrl,
+                        },
+                    ]);
+                };
+                reader.readAsDataURL(files[i]);
             }
 
         }
@@ -73,16 +111,28 @@ function AddProperty() {
         if (files.length > 4) return;
         for (let i = 0; i < files.length; i++) {
             if (files[i].type.split('/')[0] !== 'image') continue;
+            if (images.length + files.length > 4) {
+                break;
+            }
             if (!images.some((e) => e.name === files[i].name)) {
-                setImages((prevImages) => [
-                    ...prevImages,
-                    {
-                        name: files[i].name,
-                        url: URL.createObjectURL(files[i]),
-                    },
-                ]
+                const reader = new FileReader();
+                reader.onload = (event) => {
 
-                )
+                    let dataUrl = event.target.result;
+
+
+                    dataUrl = dataUrl.replace(/^data:image\/\w+;base64,/, '');
+
+                    setImages((prevImages) => [
+                        ...prevImages,
+                        {
+                            name: files[i].name,
+                            url: URL.createObjectURL(files[i]),
+                            data: dataUrl,
+                        },
+                    ]);
+                };
+                reader.readAsDataURL(files[i]);
             }
 
         }
@@ -98,6 +148,10 @@ function AddProperty() {
     };
 
     const [size, setSize] = useState('');
+    const handleTypeChange = (event) => {
+        setSelectedType(event.target.value);
+    };
+
     const handleSizeChange = (event) => {
         setSize(event.target.value);
     };
@@ -117,11 +171,82 @@ function AddProperty() {
     const handlePriceChange = (event) => {
         setPrice(event.target.value);
     };
+    const handleRoomNumberClick = (event) => {
+        const newValue = event.target.value;
+        setRoomNumber(newValue);
+    };
+    const handleBathroomNumberChange = (event) => {
+        const newValue = event.target.value;
+        setBathroomNumber(newValue);
+    };
+
+    const handleYearConstructionChange = (event) => {
+        const newValue = event.target.value;
+        setYearConstruction(newValue);
+    };
+
+    const handleFloorChange = (event) => {
+        const newValue = event.target.value;
+        setFloor(newValue);
+    };
+
+    const handleHeatingOptionChange = (event) => {
+        const option = event.target.value;
+        setSelectedHeatingOption(option);
+    };
+
+    const handleJoineryOptionChange = (event) => {
+        const option = event.target.value;
+        setSelectedJoineryOption(option);
+    };
+
+
+    const handlePropertyFeatureChange = (event) => {
+        const { value, checked } = event.target;
+
+        setSelectedFeatures((prevSelectedFeatures) => ({
+            ...prevSelectedFeatures,
+            [value]: checked,
+        }));
+    };
+
     const roomNumberOptions = ['1', '2', '3', '4', '5', '6+'];
     const bathroomNumberOptions = ['1', '2', '3', '4+'];
     const typeOptions = ['Flat', 'Apartment', 'Commercial'];
     const yearConstructionOptions = Array.from({ length: 40 }, (_, i) => (2023 - i).toString());
     const floorOptions = Array.from({ length: 30 }, (_, i) => (i + 1).toString());
+
+
+
+    const saveProperty = async () => {
+
+        const propertyData = {
+            title,
+            desc,
+            address,
+            price,
+            size, 
+            type: selectedType,
+            images,
+            roomNumber,
+            bathroomNumber,
+            yearConstruction, 
+            floor,
+            heatingOption: selectedHeatingOption,
+            joineryOption: selectedJoineryOption,
+            selectedFeatures,
+           
+        };
+
+        try {
+            console.log(propertyData);
+            const response = await axios.post('/addingProperty', propertyData);
+
+        } catch (error) {
+            console.error('Error saving property:', error);
+        }
+    };
+
 
     return (
         <Sidebar>
@@ -197,7 +322,7 @@ function AddProperty() {
                                             <BiBuildingHouse className='icon' />
                                             <div className="horizontal-dropdown">
                                                 <p>Type : Flat</p>
-                                                <Dropdown name="type" options={typeOptions} />
+                                                <Dropdown name="type" options={typeOptions} value={selectedType} onChange={handleTypeChange} />
                                             </div>
 
                                         </div>
@@ -226,51 +351,60 @@ function AddProperty() {
                                     </p>
                                     <div className="horizontal-dropdown">
                                         <p>Room number:</p>
-                                        <Dropdown name="roomNumber" options={roomNumberOptions} />
+                                        <Dropdown name="roomNumber" options={roomNumberOptions} value={roomNumber} onChange={handleRoomNumberClick} />
                                     </div>
                                     <div className="horizontal-dropdown">
                                         <p>Bathroom number:</p>
-                                        <Dropdown name="bathroomNumber" options={bathroomNumberOptions} />
+                                        <Dropdown name="bathroomNumber" options={bathroomNumberOptions} value={bathroomNumber} onChange={handleBathroomNumberChange} />
                                     </div>
                                     <div className="horizontal-dropdown">
                                         <p>Year construction:</p>
-                                        <Dropdown name="yearConstruction" options={yearConstructionOptions} />
+                                        <Dropdown name="yearConstruction" options={yearConstructionOptions} value={yearConstruction} onChange={handleYearConstructionChange} />
                                     </div>
                                     <div className="horizontal-dropdown">
                                         <p>Floor:</p>
-                                        <Dropdown name="floor" options={floorOptions} />
+                                        <Dropdown name="floor" options={floorOptions} value={floor} onChange={handleFloorChange} />
                                     </div>
-                                    <p>Heating: </p>
+                                    <p>Heating:</p>
                                     <ul>
                                         <li>
                                             <label>
                                                 <input
-                                                    type='checkbox'
+                                                    type='radio'
+                                                    name='heatingOption'
                                                     value='Gas'
-                                                    onChange={handleOptionChange}
+                                                    checked={selectedHeatingOption === 'Gas'}
+                                                    onChange={handleHeatingOptionChange}
+                                                    
                                                 />
                                                 Gas
                                             </label>
                                         </li>
+                                        <li>
+                                            <label>
+                                                <input
+                                                    type='radio'
+                                                    name='heatingOption'
+                                                    value='City central heating'
+                                                    checked={selectedHeatingOption === 'City central heating'}
+                                                    onChange={handleHeatingOptionChange}
+                                                />
+                                                City central heating
+                                            </label>
+                                        </li>
+                                       
                                     </ul>
-                                    <li>
-                                        <label>
-                                            <input
-                                                type='checkbox'
-                                                value='City central heating'
-                                                onChange={handleOptionChange}
-                                            />
-                                            City central heating
-                                        </label>
-                                    </li>
-                                    <p>Joinery: </p>
+
+                                    <p>Joinery:</p>
                                     <ul>
                                         <li>
                                             <label>
                                                 <input
-                                                    type='checkbox'
+                                                    type='radio'
+                                                    name='joineryOption'
                                                     value='Wood'
-                                                    onChange={handleOptionChange}
+                                                    checked={selectedJoineryOption === 'Wood'}
+                                                    onChange={handleJoineryOptionChange}
                                                 />
                                                 Wood
                                             </label>
@@ -278,9 +412,11 @@ function AddProperty() {
                                         <li>
                                             <label>
                                                 <input
-                                                    type='checkbox'
+                                                    type='radio'
+                                                    name='joineryOption'
                                                     value='PVC'
-                                                    onChange={handleOptionChange}
+                                                    checked={selectedJoineryOption === 'PVC'}
+                                                    onChange={handleJoineryOptionChange}
                                                 />
                                                 PVC
                                             </label>
@@ -288,14 +424,18 @@ function AddProperty() {
                                         <li>
                                             <label>
                                                 <input
-                                                    type='checkbox'
+                                                    type='radio'
+                                                    name='joineryOption'
                                                     value='Mix: Interior wood exterior PVC'
-                                                    onChange={handleOptionChange}
+                                                    checked={selectedJoineryOption === 'Mix: Interior wood exterior PVC'}
+                                                    onChange={handleJoineryOptionChange}
                                                 />
                                                 Mix: Interior wood exterior PVC
                                             </label>
                                         </li>
+                                       
                                     </ul>
+
 
                                 </div>
                                 <div className='rightdesc'>
@@ -307,7 +447,7 @@ function AddProperty() {
                                                 <input
                                                     type='checkbox'
                                                     value='Blinded door'
-                                                    onChange={handleOptionChange}
+                                                    onChange={handlePropertyFeatureChange}
                                                 />
                                                 Blinded door
                                             </label>
@@ -317,7 +457,7 @@ function AddProperty() {
                                                 <input
                                                     type='checkbox'
                                                     value='Lift'
-                                                    onChange={handleOptionChange}
+                                                    onChange={handlePropertyFeatureChange}
                                                 />
                                                 Lift
                                             </label>
@@ -327,7 +467,7 @@ function AddProperty() {
                                                 <input
                                                     type='checkbox'
                                                     value='Electrical power'
-                                                    onChange={handleOptionChange}
+                                                    onChange={handlePropertyFeatureChange}
                                                 />
                                                 Electrical power
                                             </label>
@@ -337,7 +477,7 @@ function AddProperty() {
                                                 <input
                                                     type='checkbox'
                                                     value='Internet'
-                                                    onChange={handleOptionChange}
+                                                    onChange={handlePropertyFeatureChange}
                                                 />
                                                 Internet
                                             </label>
@@ -347,7 +487,7 @@ function AddProperty() {
                                                 <input
                                                     type='checkbox'
                                                     value='Garbage'
-                                                    onChange={handleOptionChange}
+                                                    onChange={handlePropertyFeatureChange}
                                                 />
                                                 Garbage
                                             </label>
@@ -357,7 +497,7 @@ function AddProperty() {
                                                 <input
                                                     type='checkbox'
                                                     value='Cable TV'
-                                                    onChange={handleOptionChange}
+                                                    onChange={handlePropertyFeatureChange}
                                                 />
                                                 Cable TV
                                             </label>
@@ -367,7 +507,7 @@ function AddProperty() {
                                                 <input
                                                     type='checkbox'
                                                     value='Interphone'
-                                                    onChange={handleOptionChange}
+                                                    onChange={handlePropertyFeatureChange}
                                                 />
                                                 Interphone
                                             </label>
@@ -377,7 +517,7 @@ function AddProperty() {
                                                 <input
                                                     type='checkbox'
                                                     value='Public Parking'
-                                                    onChange={handleOptionChange}
+                                                    onChange={handlePropertyFeatureChange}
                                                 />
                                                 Public Parking
                                             </label>
@@ -387,7 +527,7 @@ function AddProperty() {
                                                 <input
                                                     type='checkbox'
                                                     value='Electricity'
-                                                    onChange={handleOptionChange}
+                                                    onChange={handlePropertyFeatureChange}
                                                 />
                                                 Electricity
                                             </label>
@@ -397,7 +537,7 @@ function AddProperty() {
                                                 <input
                                                     type='checkbox'
                                                     value='Balcony'
-                                                    onChange={handleOptionChange}
+                                                    onChange={handlePropertyFeatureChange}
                                                 />
                                                 Balcony
                                             </label>
@@ -407,7 +547,7 @@ function AddProperty() {
                                                 <input
                                                     type='checkbox'
                                                     value='Garage'
-                                                    onChange={handleOptionChange}
+                                                    onChange={handlePropertyFeatureChange}
                                                 />
                                                 Garage
                                             </label>
@@ -417,7 +557,7 @@ function AddProperty() {
                                                 <input
                                                     type='checkbox'
                                                     value='Air conditioning'
-                                                    onChange={handleOptionChange}
+                                                    onChange={handlePropertyFeatureChange}
                                                 />
                                                 Air conditioning
                                             </label>
@@ -427,7 +567,7 @@ function AddProperty() {
                                                 <input
                                                     type='checkbox'
                                                     value='Gas'
-                                                    onChange={handleOptionChange}
+                                                    onChange={handlePropertyFeatureChange}
                                                 />
                                                 Gas
                                             </label>
@@ -441,7 +581,7 @@ function AddProperty() {
                 </div>
             </div>
             <div className='btnSaveDiv'>
-                <button className='btnSave'>Save</button>
+                <button className='btnSave' onClick={saveProperty} >Save</button>
             </div>
 
         </Sidebar>
