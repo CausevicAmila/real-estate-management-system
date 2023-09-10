@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react';
 import "./Admin.css";
 import Sidebar from "../../components/Sidebar/Sidebar";
-//import '../PropertyDetail/PropertyDetail.css';
 import { RiUserLocationLine, RiHotelBedLine, RiSpace, RiMoneyDollarCircleLine } from "react-icons/ri";
 import { BiBuildingHouse } from "react-icons/bi";
 import { FaImages } from "react-icons/fa";
