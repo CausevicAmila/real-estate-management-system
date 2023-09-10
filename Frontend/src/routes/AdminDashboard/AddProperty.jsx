@@ -26,9 +26,9 @@ function AddProperty() {
     const [isDragging, setIsDragging] = useState(false);
     const fileInputRef = useRef(null);
     const [selectedType, setSelectedType] = useState('Flat');
-    const [roomNumber, setRoomNumber] = useState('1'); 
-    const [bathroomNumber, setBathroomNumber] = useState('1'); 
-    const [yearConstruction, setYearConstruction] = useState('2023'); 
+    const [roomNumber, setRoomNumber] = useState('1');
+    const [bathroomNumber, setBathroomNumber] = useState('1');
+    const [yearConstruction, setYearConstruction] = useState('2023');
     const [floor, setFloor] = useState('1');
     const [selectedHeatingOption, setSelectedHeatingOption] = useState('');
     const [selectedJoineryOption, setSelectedJoineryOption] = useState('');
@@ -89,7 +89,7 @@ function AddProperty() {
         }
     }
     const deleteImage = (index) => {
-        setImages((prevImages) => 
+        setImages((prevImages) =>
             prevImages.filter((_, i) => i !== index)
         );
     }
@@ -225,17 +225,17 @@ function AddProperty() {
             desc,
             address,
             price,
-            size, 
+            size,
             type: selectedType,
             images,
             roomNumber,
             bathroomNumber,
-            yearConstruction, 
+            yearConstruction,
             floor,
             heatingOption: selectedHeatingOption,
             joineryOption: selectedJoineryOption,
             selectedFeatures,
-           
+
         };
 
         try {
@@ -254,7 +254,7 @@ function AddProperty() {
                 <div className='back bg-lightgray'>
                     <div className='mainDiv'>
                         <div className='icon-left-side  text-primary font-inter font-semibold '>
-                            <div className='lines' onDragOver={onDragOver} onDragLeave={onDragLeave} onDrop={onDrop }>
+                            <div className='lines' onDragOver={onDragOver} onDragLeave={onDragLeave} onDrop={onDrop}>
                                 <FaImages />
                                 {isDragging ? (
                                     <h5 className='icon-text'><br></br> Drop Images here <br></br>  </h5>
@@ -268,9 +268,9 @@ function AddProperty() {
                             <div className='containerImage'>
                                 {
                                     images.map((images, index) => (
-                                        <div className='image' key={index }>
-                                            <span className='delete' onClick={() => deleteImage(index) }>&times;</span>
-                                            <img src={images.url} alt={images.name } />
+                                        <div className='image' key={index}>
+                                            <span className='delete' onClick={() => deleteImage(index)}>&times;</span>
+                                            <img src={images.url} alt={images.name} />
                                         </div>
 
                                     )
@@ -375,7 +375,7 @@ function AddProperty() {
                                                     value='Gas'
                                                     checked={selectedHeatingOption === 'Gas'}
                                                     onChange={handleHeatingOptionChange}
-                                                    
+
                                                 />
                                                 Gas
                                             </label>
@@ -392,7 +392,7 @@ function AddProperty() {
                                                 City central heating
                                             </label>
                                         </li>
-                                       
+
                                     </ul>
 
                                     <p>Joinery:</p>
@@ -433,7 +433,7 @@ function AddProperty() {
                                                 Mix: Interior wood exterior PVC
                                             </label>
                                         </li>
-                                       
+
                                     </ul>
 
 
