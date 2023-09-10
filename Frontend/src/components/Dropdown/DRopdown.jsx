@@ -14,8 +14,8 @@ function DropdownMenu({ setSelectedType, fetchData }) {
         setSelectedOption(option);
         setIsOpen(false);
 
-        setSelectedType(option); // Update selected property type using setSelectedType
-        fetchData(); // Fetch data based on the selected property type and sorting option
+        setSelectedType(option); 
+        fetchData(); 
     };
 
     return (

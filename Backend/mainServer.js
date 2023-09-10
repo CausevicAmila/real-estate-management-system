@@ -8,6 +8,8 @@ const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
+const imageSize = require('image-size');
+
 
 
 app.use(express.static(path.join(__dirname, 'dist')));
