@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/Footer';
-import './Login.css';
+import './login.css';
 import { MdSupervisedUserCircle, MdPassword } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
 
 function Login() {
     const [isButtonClicked, setButtonClicked] = useState(false);
@@ -37,7 +38,7 @@ function Login() {
             
                
         } catch (error) {
-            console.error('Login failed:', error);
+            toast.error("Please enter valid username and password")
         }
     };
 
@@ -85,6 +86,18 @@ function Login() {
                     </div>
                 </section>
                 <Footer />
+                <ToastContainer
+                    position="top-right"
+                    autoClose={1000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="light"
+                />
             </div>
         </>
 
@@ -92,3 +105,4 @@ function Login() {
 }
 
 export default Login;
+

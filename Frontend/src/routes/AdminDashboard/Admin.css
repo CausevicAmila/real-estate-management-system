@@ -33,7 +33,7 @@ li {
 }
 .form{
     outline: 2px solid #ff9800;
-    width: 30px;
+    width: 50px;
     padding: 5px;
     height: 20px;
     margin-left: 16px;
@@ -116,12 +116,13 @@ li {
 border-radius: 20px;
 }
 
+.price input{
+    width: 150px;
+}
 
-
-.gridProperty{
-
+.gridProperty {
     display: grid;
-    grid-template-columns: repeat(auto-fill , minmax(270px , 1fr) );
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr) );
     grid-gap: 20px;
 }
 

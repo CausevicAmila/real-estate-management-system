@@ -40,7 +40,7 @@
 
 .email-input {
   flex-grow: 1;
-  border: none;
+  border: none !important;
   color: gray;
   background: none;
   outline: none;
@@ -115,3 +115,8 @@
   
 }
 
+
+.email-input {
+    padding: 0;
+    border: 0;
+}

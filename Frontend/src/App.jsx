@@ -13,6 +13,8 @@ import PropertyDetails from "./routes/PropertyDetail/PropertyDetail";
 import Admin from "./routes/AdminDashboard/Admin";
 import Properties from "./routes/AdminDashboard/Properties";
 import AddProperty from "./routes/AdminDashboard/AddProperty";
+import EditProperty from "./routes/AdminDashboard/EditProperty";
+import Tours from './routes/Tours/Tours'
 
 function App() {
     return (
@@ -31,6 +33,8 @@ function App() {
                 <Route path="/admin" element={<Admin />} />
                 <Route path="/admin" element={<Properties />} />
                 <Route path="/admin/add" element={<AddProperty />} />
+                <Route path="/admin/edit/:id" element={<EditProperty />} />
+                <Route path="/admin/tours" element={<Tours />} />
             </Routes>
         </section>
     );
