@@ -5,6 +5,8 @@ import { RiUserLocationLine, RiHotelBedLine, RiSpace, RiMoneyDollarCircleLine } 
 import { BiBuildingHouse } from "react-icons/bi";
 import { FaImages } from "react-icons/fa";
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Dropdown({ name, options, value, onChange }) {
     return (
@@ -209,8 +211,8 @@ function AddProperty() {
         }));
     };
 
-    const roomNumberOptions = ['1', '2', '3', '4', '5', '6+'];
-    const bathroomNumberOptions = ['1', '2', '3', '4+'];
+    const roomNumberOptions = ['1', '2', '3', '4', '5', '6'];
+    const bathroomNumberOptions = ['1', '2', '3', '4'];
     const typeOptions = ['Flat', 'Apartment', 'Commercial'];
     const yearConstructionOptions = Array.from({ length: 40 }, (_, i) => (2023 - i).toString());
     const floorOptions = Array.from({ length: 30 }, (_, i) => (i + 1).toString());
@@ -240,9 +242,19 @@ function AddProperty() {
         try {
             console.log(propertyData);
             const response = await axios.post('/addingProperty', propertyData);
+            if (response.status === 200) {
+                toast.success("Property added successfully", {
+                    onClose: () => {
+                        window.location.reload();
+                    },
+                });
+            }
 
         } catch (error) {
-            console.error('Error saving property:', error);
+            toast.error("Please fill all fields valid information ", {
+                toastId: 'error1',
+                autoClose: 1000,
+            })
         }
     };
 
@@ -582,7 +594,18 @@ function AddProperty() {
             <div className='btnSaveDiv'>
                 <button className='btnSave' onClick={saveProperty} >Save</button>
             </div>
-
+            <ToastContainer
+                position="top-right"
+                autoClose={500}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
         </Sidebar>
     );
 }

@@ -28,11 +28,12 @@
     font-size: 25px;
     margin-left: 20px;
     margin-right: 20px;
+    cursor: pointer;
 }
 .link{
     display: flex;
     color: #007aff;
-    padding: 20px 15px;
+    padding: 20px 15px 0px 15px;
     gap: 10px;
 }
     .link:last-child {

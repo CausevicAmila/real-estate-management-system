@@ -1,0 +1,79 @@
+
+.tours-table-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.tours-table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+    .tours-table th,
+    .tours-table td {
+        padding: 10px;
+        text-align: left;
+    }
+
+    .tours-table th {
+        background-color: #f2f2f2;
+    }
+
+    .tours-table tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .tours-table tbody tr:hover {
+        background-color: #ddd;
+    }
+
+  
+.tourBtns{
+    display: inline-flex;
+}
+
+.declineBtn {
+    padding: 5px 10px;
+    background-color: #FF5733;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+ .declineBtn:hover {
+
+    background-color: red;
+
+}
+ .acceptBtn {
+    padding: 5px 10px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    margin-right: 5px;
+}
+ .acceptBtn:hover {
+        background-color: #0056b3;
+    }
+
+
+.confirmedBtn {
+    padding: 5px 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+}
+
+.declinedBtn {
+    padding: 5px 10px;
+    background-color: #FF5733;
+    color: white;
+    border: none;
+}
+
+td a{
+    color:blue;
+}
