@@ -321,12 +321,12 @@ function AddProperty() {
                                     <div className='addInfo'>
                                         <div className='bed'>
                                             <RiHotelBedLine className='icon' />
-                                            <p>2</p>
+                                            
                                         </div>
 
                                         <div className='bed'>
                                             <RiSpace className='icon' />
-                                            <p>60m2</p>
+                                            
                                         </div>
 
                                         <div className='bed'>

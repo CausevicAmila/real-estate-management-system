@@ -1,13 +1,8 @@
 export const MenuItems = [
     {
-        title : 'Sales',
+        title : 'Real Estates',
         url : '/sales',
         cName : 'nav-links'
-    },
-    {
-        title : 'Rentals',
-        url : '/sales',
-        cName : 'nav-links' 
     },
     {
         title : 'About Us',

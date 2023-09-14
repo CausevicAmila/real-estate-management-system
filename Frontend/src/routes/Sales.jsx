@@ -61,8 +61,8 @@ function Sales() {
                 </div>
                 <div className='container'>
                     <div className='h-text text-primary uppercase text-2xl leading-8 font-inter font-semibold'>
-                        <p className='mt-6'>Sales</p>
-                        <p className='text-darkgray text-lg leading-7 font-inter font-normal lowercase'>8 of 587</p>
+                        <p className='mt-6'>Real Estates</p>
+                        
                     </div>
                     <div className='dropdown'>
                         <DropdownMenu setSelectedType={setSelectedType} fetchData={fetchData} />

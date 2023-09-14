@@ -35,7 +35,7 @@ export class HomePage extends BasePage {
         await this.findElementAndClick(this.sales);
     }
     async checkSalesHeader(){
-        await this.isMatching(this.salesCheck, "SALES");
+        await this.isMatching(this.salesCheck, "Real Estates");
     }
     async clickAboutUs(){
         let seeMore = await this.driver.wait(until.elementsLocated(this.sales), 100000);

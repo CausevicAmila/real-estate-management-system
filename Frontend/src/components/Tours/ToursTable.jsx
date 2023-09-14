@@ -42,7 +42,7 @@ function ToursTable() {
                             </td>
                             <td>{tour.tourtime}</td>
                             <td>
-                                <a href={`/property/${tour.id}`} target='_blank'>View Property</a>
+                                <a href={`/property/${tour.property_id}`} target='_blank'>View Property</a>
                             </td>
                             <td className='tourBtns'>
                                 {tour.state === 'none' && (
